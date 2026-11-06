@@ -480,20 +480,54 @@ export default function DateVersePage() {
           </div>
 
           {/* Bottom 4-Column Floating Feature Card Bar (Matches media_1793955774641_cdb9e1de.jpg) */}
-          <div className="mt-8 max-w-[1260px] mx-auto bg-white/98 backdrop-blur-md rounded-3xl shadow-[0_14px_38px_rgba(9,45,89,0.18)] border border-white p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-200">
-            {/* 1. QR కోడ్ స్కాన్ చేయండి */}
-            <Link
-              href="/scan"
-              className="flex flex-col items-center text-center px-3 py-1.5 group hover:-translate-y-0.5 transition-transform"
-            >
-              <QrCode className="w-10 h-10 text-[#092D59] mb-2 group-hover:scale-110 transition-transform" />
+          <div className="mt-8 max-w-[1260px] mx-auto bg-white/98 backdrop-blur-md rounded-3xl shadow-[0_14px_38px_rgba(9,45,89,0.18)] border border-white p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-200 items-center">
+            {/* 1. Live Scannable Calendar QR Code + Download Button */}
+            <div className="flex flex-col items-center text-center px-3 py-1.5">
+              <div
+                onClick={() => setShowQrModal(true)}
+                className="cursor-pointer mb-2"
+              >
+                <QrCodeBox
+                  date={rawDate}
+                  customUrl={
+                    typeof window !== "undefined"
+                      ? window.location.origin
+                      : "https://grace-mandhir-official.vercel.app"
+                  }
+                  size={88}
+                />
+              </div>
               <h3 className="font-telugu text-base sm:text-lg font-black text-[#092D59]">
-                QR కోడ్ స్కాన్ చేయండి
+                క్యాలెండర్ QR కోడ్
               </h3>
-              <p className="font-telugu text-xs font-bold text-slate-600 mt-0.5">
-                క్యాలెండర్‌లోని తేదీకి వాక్యం పొందండి
+              <p className="font-telugu text-xs font-bold text-slate-600 mt-0.5 mb-2">
+                స్కాన్ చేస్తే ఆ రోజు వాక్యం ఓపెన్ అవుతుంది
               </p>
-            </Link>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleDownloadQrPng(
+                      typeof window !== "undefined"
+                        ? window.location.origin
+                        : "https://grace-mandhir-official.vercel.app",
+                      "Grace-Mandhir-Master-Daily-QR.png"
+                    )
+                  }
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#092D59] hover:bg-[#12549A] text-white text-[11px] font-extrabold shadow-sm"
+                >
+                  <Download className="w-3 h-3 text-[#FFC629]" />
+                  <span>QR డౌన్‌లోడ్</span>
+                </button>
+                <Link
+                  href="/scan"
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF5FF] hover:bg-blue-100 text-[#092D59] text-[11px] font-extrabold border border-blue-200"
+                >
+                  <QrCode className="w-3 h-3 text-[#12549A]" />
+                  <span>స్కానర్</span>
+                </Link>
+              </div>
+            </div>
 
             {/* 2. 2027 క్యాలెండర్ */}
             <Link

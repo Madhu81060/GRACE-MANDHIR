@@ -16,6 +16,8 @@ import {
   Check,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
+import { QrCodeBox } from "@/components/QrCodeBox";
+import QRCode from "qrcode";
 import {
   WallpaperCanvas,
   WallpaperCanvasHandle,
@@ -28,16 +30,36 @@ import {
   resolveVerseForDate,
 } from "@/lib/verseStore";
 
+function getTodayDateString(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 export default function DateVersePage() {
   const params = useParams();
   const router = useRouter();
-  const rawDate =
-    typeof params?.date === "string" ? params.date : "2027-01-05";
+  const urlDateParam =
+    typeof params?.date === "string" ? params.date : undefined;
+
+  const [rawDate, setRawDate] = useState<string>(
+    () => urlDateParam || getTodayDateString()
+  );
+
+  useEffect(() => {
+    if (urlDateParam) {
+      setRawDate(urlDateParam);
+    } else {
+      setRawDate(getTodayDateString());
+    }
+  }, [urlDateParam]);
 
   const canvasRef = useRef<WallpaperCanvasHandle | null>(null);
 
   const [verse, setVerse] = useState<VerseRecord>(() =>
-    resolveVerseForDate(rawDate)
+    resolveVerseForDate(urlDateParam || getTodayDateString())
   );
   const [activeTemplate, setActiveTemplate] = useState<
     "royal-navy" | "promise-poster" | "mobile-sunrise"
@@ -45,6 +67,7 @@ export default function DateVersePage() {
   const [userPhotoUrl, setUserPhotoUrl] = useState<string>("");
   const [showDateModal, setShowDateModal] = useState<boolean>(false);
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
+  const [showQrModal, setShowQrModal] = useState<boolean>(false);
   const [toastMsg, setToastMsg] = useState<string>("");
 
   useEffect(() => {
@@ -123,6 +146,29 @@ export default function DateVersePage() {
       );
       triggerToast("1080×1920 మొబైల్ వాల్పేపర్ సేవ్ చేయబడింది!");
     }, 250);
+  };
+
+  const handleDownloadQrPng = async (urlToEncode: string, filename: string) => {
+    try {
+      const dataUrl = await QRCode.toDataURL(urlToEncode, {
+        width: 1024,
+        margin: 2,
+        errorCorrectionLevel: "H",
+        color: {
+          dark: "#092D59",
+          light: "#FFFFFF",
+        },
+      });
+      const link = document.createElement("a");
+      link.download = filename;
+      link.href = dataUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      triggerToast(`QR కోడ్ డౌన్‌లోడ్ అయింది: ${filename}`);
+    } catch {
+      triggerToast("QR కోడ్ డౌన్‌లోడ్ విఫలమైంది");
+    }
   };
 
   const handleNativeOrSocialShare = async () => {
@@ -398,7 +444,7 @@ export default function DateVersePage() {
               </div>
 
               {/* Compact Date Switcher Row */}
-              <div className="mt-4 flex items-center gap-3 text-xs font-extrabold text-[#092D59]">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5 text-xs font-extrabold text-[#092D59]">
                 <Link
                   href={`/verse/${prevDate}`}
                   className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white shadow-sm"
@@ -413,6 +459,14 @@ export default function DateVersePage() {
                 >
                   <Calendar className="w-3.5 h-3.5 text-[#12549A]" />
                   <span className="font-telugu">తేదీ మార్చండి ({rawDate})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowQrModal(true)}
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#092D59] hover:bg-[#12549A] text-white border border-[#FFC629] shadow-sm"
+                >
+                  <QrCode className="w-3.5 h-3.5 text-[#FFC629]" />
+                  <span className="font-telugu">క్యాలెండర్ QR కోడ్</span>
                 </button>
                 <Link
                   href={`/verse/${nextDate}`}
@@ -592,6 +646,130 @@ export default function DateVersePage() {
                 type="button"
                 onClick={() => setShowShareModal(false)}
                 className="px-5 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Calendar QR Code & Scanner Modal */}
+      {showQrModal && (
+        <div className="fixed inset-0 z-50 bg-black/55 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border-2 border-[#B8D8F8] text-slate-900">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h3 className="font-body-serif-te text-2xl font-black text-[#092D59]">
+                  క్యాలెండర్ QR కోడ్‌లు (Print &amp; Scan QR Codes)
+                </h3>
+                <p className="font-nav-unique text-xs font-semibold text-slate-600 mt-1">
+                  మీ మొబైల్ కెమెరా లేదా Google Lens తో స్కాన్ చేస్తే నేరుగా ఆ రోజు వాగ్దాన వాక్యం ఓపెన్ అవుతుంది.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowQrModal(false)}
+                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+              {/* 1. Master Auto-Daily QR Code */}
+              <div className="rounded-2xl bg-[#F2F8FF] border-2 border-[#12549A] p-4 flex flex-col items-center text-center">
+                <span className="px-3 py-0.5 rounded-full bg-[#092D59] text-[#FFC629] text-[11px] font-extrabold mb-2">
+                  ★ 1. మెయిన్ క్యాలెండర్ QR (Recommended)
+                </span>
+                <h4 className="font-nav-unique text-sm font-black text-[#092D59] mb-2">
+                  ప్రతిరోజూ ఆటోమేటిక్‌గా మారే QR కోడ్
+                </h4>
+                <QrCodeBox
+                  date={rawDate}
+                  customUrl={
+                    typeof window !== "undefined"
+                      ? window.location.origin
+                      : "https://grace-mandhir-official.vercel.app"
+                  }
+                  size={150}
+                />
+                <p className="font-nav-unique text-[11px] font-semibold text-slate-600 mt-2">
+                  ఈ ఒక్క QR కోడ్ క్యాలెండర్ మీద ప్రింట్ చేస్తే చాలు — ఏ రోజు స్కాన్ చేస్తే <strong>ఆ రోజు తేదీ &amp; వాగ్దాన వాక్యం</strong> ఆటోమేటిక్‌గా ఓపెన్ అవుతుంది!
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleDownloadQrPng(
+                      typeof window !== "undefined"
+                        ? window.location.origin
+                        : "https://grace-mandhir-official.vercel.app",
+                      "Grace-Mandhir-Master-Daily-QR.png"
+                    )
+                  }
+                  className="mt-3 w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#092D59] to-[#12549A] text-white text-xs font-extrabold shadow"
+                >
+                  <Download className="w-4 h-4 text-[#FFC629]" />
+                  <span>Download Master QR (PNG)</span>
+                </button>
+              </div>
+
+              {/* 2. Date-Specific QR Code */}
+              <div className="rounded-2xl bg-white border border-blue-200 p-4 flex flex-col items-center text-center">
+                <span className="px-3 py-0.5 rounded-full bg-blue-100 text-[#092D59] text-[11px] font-extrabold mb-2">
+                  2. ఈ తేదీ QR కోడ్ ({rawDate})
+                </span>
+                <h4 className="font-nav-unique text-sm font-black text-[#092D59] mb-2">
+                  {rawDate} తేదీ ప్రత్యేక QR కోడ్
+                </h4>
+                <QrCodeBox date={rawDate} size={150} />
+                <p className="font-nav-unique text-[11px] font-semibold text-slate-600 mt-2">
+                  దీనిని స్కాన్ చేస్తే ఎప్పుడైనా <strong>{rawDate}</strong> తేదీ వాగ్దాన వాక్యం (`/verse/{rawDate}`) ఓపెన్ అవుతుంది.
+                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleDownloadQrPng(
+                      `${
+                        typeof window !== "undefined"
+                          ? window.location.origin
+                          : "https://grace-mandhir-official.vercel.app"
+                      }/verse/${rawDate}`,
+                      `Grace-Mandhir-QR-${rawDate}.png`
+                    )
+                  }
+                  className="mt-3 w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white hover:bg-blue-50 text-[#092D59] border-2 border-[#092D59] text-xs font-extrabold"
+                >
+                  <Download className="w-4 h-4 text-[#12549A]" />
+                  <span>Download {rawDate} QR (PNG)</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200">
+              <div className="flex flex-wrap items-center gap-2">
+                <Link
+                  href="/calendar"
+                  onClick={() => setShowQrModal(false)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-[#092D59] text-xs font-extrabold"
+                >
+                  <Calendar className="w-4 h-4 text-[#12549A]" />
+                  <span>365 రోజుల QR కోడ్‌లు చూడండి (/calendar)</span>
+                </Link>
+                <Link
+                  href="/scan"
+                  onClick={() => setShowQrModal(false)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-[#092D59] text-xs font-extrabold"
+                >
+                  <QrCode className="w-4 h-4 text-[#12549A]" />
+                  <span>కెమెరా QR స్కానర్ (/scan)</span>
+                </Link>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowQrModal(false)}
+                className="px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold"
               >
                 Close
               </button>

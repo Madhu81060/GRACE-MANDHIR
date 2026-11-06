@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Calendar, QrCode, ArrowRight, Sparkles, Printer } from "lucide-react";
+import { Calendar, QrCode, ArrowRight, Sparkles, Printer, Download } from "lucide-react";
+import QRCode from "qrcode";
 import { Navbar } from "@/components/Navbar";
 import { QrCodeBox } from "@/components/QrCodeBox";
 import { resolveVerseForDate, CURATED_VERSES } from "@/lib/verseStore";
@@ -28,6 +29,28 @@ export default function CalendarDirectoryPage() {
 
   const activeMonth = MONTHS_2027[selectedMonthIdx];
   const daysArray = Array.from({ length: activeMonth.days }, (_, i) => i + 1);
+
+  const downloadQrPng = async (targetUrl: string, filename: string) => {
+    try {
+      const dataUrl = await QRCode.toDataURL(targetUrl, {
+        width: 1024,
+        margin: 2,
+        errorCorrectionLevel: "H",
+        color: {
+          dark: "#092D59",
+          light: "#FFFFFF",
+        },
+      });
+      const link = document.createElement("a");
+      link.download = filename;
+      link.href = dataUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#F4F9FF] via-[#EAF5FF] to-[#DCEBFA] text-slate-900">
@@ -77,6 +100,50 @@ export default function CalendarDirectoryPage() {
               <span>Print Month QR Sheet</span>
             </button>
           </div>
+        </div>
+
+        {/* Master Single Calendar QR Code Banner (Auto-opens Today's Date every day) */}
+        <div className="mt-6 rounded-3xl bg-gradient-to-r from-[#062144] via-[#092D59] to-[#12549A] text-white p-5 sm:p-6 shadow-xl border-2 border-[#FFC629]/70 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+            <div className="shrink-0 bg-white p-2 rounded-2xl shadow-lg">
+              <QrCodeBox
+                date="2027-01-01"
+                customUrl={
+                  typeof window !== "undefined"
+                    ? window.location.origin
+                    : "https://grace-mandhir-official.vercel.app"
+                }
+                size={110}
+              />
+            </div>
+            <div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#FFC629] text-[#092D59] text-xs font-black mb-2">
+                ★ మెయిన్ క్యాలెండర్ QR కోడ్ (All-in-One Daily Auto QR)
+              </span>
+              <h2 className="font-body-serif-te text-xl sm:text-2xl font-black text-white">
+                ఈ ఒక్క QR కోడ్ ప్రింట్ చేస్తే చాలు — ప్రతిరోజూ ఆ రోజు వాగ్దాన వాక్యం ఆటోమేటిక్‌గా ఓపెన్ అవుతుంది!
+              </h2>
+              <p className="font-nav-unique text-xs sm:text-sm text-blue-100 mt-1">
+                ఎవరైనా మొబైల్ కెమెరా లేదా Google Lens తో ఈ QR కోడ్ స్కాన్ చేస్తే, ఆ రోజు తేదీ (Today&apos;s Date) ఏదైతే ఆ తేదీ వాగ్దాన కార్డు మరియు వాక్యం నేరుగా ఓపెన్ అవుతాయి. లేదా కింద ఉన్న 365 తేదీలలో ప్రతి తేదీకి వేర్వేరు QR కోడ్ కూడా డౌన్‌లోడ్ చేసుకోవచ్చు.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() =>
+              downloadQrPng(
+                typeof window !== "undefined"
+                  ? window.location.origin
+                  : "https://grace-mandhir-official.vercel.app",
+                "Grace-Mandhir-Master-Daily-QR.png"
+              )
+            }
+            className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#FFC629] hover:bg-[#FFD55A] text-[#092D59] font-nav-unique text-xs sm:text-sm font-black shadow-lg"
+          >
+            <Download className="w-4 h-4" />
+            <span>Download Master QR (PNG)</span>
+          </button>
         </div>
 
         {/* 12 Months Selector Bar */}
@@ -157,13 +224,34 @@ export default function CalendarDirectoryPage() {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
 
-                  <Link
-                    href={`/studio?date=${dateStr}`}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#EAF5FF] hover:bg-blue-100 text-[#092D59] text-[11px] font-bold"
-                  >
-                    <Sparkles className="w-3 h-3 text-[#D49212]" />
-                    <span>Customize</span>
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        downloadQrPng(
+                          `${
+                            typeof window !== "undefined"
+                              ? window.location.origin
+                              : "https://grace-mandhir-official.vercel.app"
+                          }/verse/${dateStr}`,
+                          `Grace-Mandhir-QR-${dateStr}.png`
+                        )
+                      }
+                      title={`Download QR PNG for ${dateStr}`}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#092D59] hover:bg-[#12549A] text-white text-[11px] font-bold"
+                    >
+                      <Download className="w-3 h-3 text-[#FFC629]" />
+                      <span>QR</span>
+                    </button>
+
+                    <Link
+                      href={`/studio?date=${dateStr}`}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#EAF5FF] hover:bg-blue-100 text-[#092D59] text-[11px] font-bold"
+                    >
+                      <Sparkles className="w-3 h-3 text-[#D49212]" />
+                      <span>Customize</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             );

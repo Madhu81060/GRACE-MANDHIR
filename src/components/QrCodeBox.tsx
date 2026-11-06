@@ -5,6 +5,7 @@ import QRCode from "qrcode";
 
 interface QrCodeBoxProps {
   date: string;
+  customUrl?: string;
   size?: number;
   showCenterLogo?: boolean;
   className?: string;
@@ -13,6 +14,7 @@ interface QrCodeBoxProps {
 
 export const QrCodeBox: React.FC<QrCodeBoxProps> = ({
   date,
+  customUrl,
   size = 112,
   showCenterLogo = true,
   className = "",
@@ -25,11 +27,11 @@ export const QrCodeBox: React.FC<QrCodeBoxProps> = ({
     const origin =
       typeof window !== "undefined" && window.location?.origin
         ? window.location.origin
-        : "https://gracemandhir.org";
-    const targetUrl = `${origin}/verse/${date}`;
+        : "https://grace-mandhir-official.vercel.app";
+    const targetUrl = customUrl || `${origin}/verse/${date}`;
 
     QRCode.toDataURL(targetUrl, {
-      width: size * 2,
+      width: Math.max(size * 3, 512),
       margin: 1,
       errorCorrectionLevel: "H",
       color: {
@@ -47,7 +49,7 @@ export const QrCodeBox: React.FC<QrCodeBoxProps> = ({
     return () => {
       active = false;
     };
-  }, [date, size]);
+  }, [date, customUrl, size]);
 
   return (
     <div

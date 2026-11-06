@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: "Outfit", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-playfair: "Cinzel", "Playfair Display", Georgia, serif;
+  --font-telugu: "Noto Sans Telugu", "Ramabhadra", sans-serif;
+  --font-nav-te: "Mandali", "Noto Sans Telugu", sans-serif;
+  --font-body-te: "Noto Serif Telugu", "Suranna", serif;
+  --font-card-te: "Ramabhadra", "Noto Sans Telugu", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-inter);
+  }
+
+  body {
+    @apply bg-[#EAF5FF] text-slate-900 antialiased selection:bg-[#FFC629] selection:text-[#092D59];
+    overflow-x: hidden;
+  }
+}
+
+/* Distinct Typography Systems for Navbar, Body Display & Promise Card */
+.font-nav-unique {
+  font-family: "Mandali", "Outfit", sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.font-brand-cinzel {
+  font-family: "Cinzel", Georgia, serif;
+  letter-spacing: 0.04em;
+}
+
+.font-body-serif-te {
+  font-family: "Noto Serif Telugu", "Suranna", Georgia, serif;
+}
+
+.font-body-editorial {
+  font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+}
+
+.font-card-display {
+  font-family: "Ramabhadra", "Montserrat", sans-serif;
+}
+
+.telugu-heading-shadow {
+  text-shadow: 0 4px 24px rgba(5, 20, 43, 0.85), 0 2px 6px rgba(0, 0, 0, 0.65);
+}
+
+.gold-text-glow {
+  text-shadow: 0 4px 28px rgba(255, 198, 41, 0.45), 0 2px 8px rgba(5, 20, 43, 0.9);
+}

@@ -44,7 +44,7 @@ export default function HomePage() {
       {homeView === "promise" ? (
         <DateVersePage />
       ) : (
-        <main className="min-h-screen flex flex-col bg-[#FFF7FB] overflow-x-hidden">
+        <main className="min-h-screen flex flex-col bg-[#EAF5FF] overflow-x-hidden">
           <Navbar />
           <HeroSection />
         </main>

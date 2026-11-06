@@ -6,7 +6,6 @@ import {
   Plus,
   Trash2,
   Edit3,
-  QrCode,
   Image as ImageIcon,
   Save,
   Check,
@@ -32,7 +31,9 @@ export default function AdminDashboardPage() {
   const [password, setPassword] = useState<string>("Grace@2027");
   const [authError, setAuthError] = useState<string>("");
 
-  const [activeTab, setActiveTab] = useState<"verses" | "backgrounds" | "branding">("verses");
+  const [activeTab, setActiveTab] = useState<
+    "verses" | "backgrounds" | "branding"
+  >("verses");
   const [verses, setVerses] = useState<VerseRecord[]>(CURATED_VERSES);
   const [backgrounds, setBackgrounds] =
     useState<WallpaperBackground[]>(DEFAULT_BACKGROUNDS);
@@ -41,17 +42,16 @@ export default function AdminDashboardPage() {
   );
   const [toast, setToast] = useState<string>("");
 
-  // Form state for adding/editing a daily Bible verse
   const [formVerse, setFormVerse] = useState<Partial<VerseRecord>>({
-    date: "2026-11-08",
+    date: "2027-01-06",
     teluguVerse: "",
     englishVerse: "",
     teluguReference: "",
     englishReference: "",
     teluguThemeTitle: "ఈరోజు వాగ్దానం",
     themeTitle: "Daily Blessing",
-    backgroundUrl: "/images/hero-sunrise-cross.jpg",
-    templateId: "promise-poster",
+    backgroundUrl: "/images/navy-theme-ref.jpg",
+    templateId: "royal-navy",
   });
 
   const showToast = (msg: string) => {
@@ -97,7 +97,7 @@ export default function AdminDashboardPage() {
       if (res.ok && data.authenticated) {
         sessionStorage.setItem("gmc_admin_token", data.token);
         setIsAuthenticated(true);
-        showToast("Welcome to Grace Mandhir Church Admin Dashboard!");
+        showToast("Welcome to Grace Mandhir Admin Dashboard!");
       } else {
         setAuthError(data.error || "Invalid credentials");
       }
@@ -122,17 +122,6 @@ export default function AdminDashboardPage() {
     if (res.ok && data.verses) {
       setVerses(data.verses);
       showToast(`Saved Bible Verse & QR Code for ${formVerse.date}!`);
-      setFormVerse({
-        date: "2027-01-11",
-        teluguVerse: "",
-        englishVerse: "",
-        teluguReference: "",
-        englishReference: "",
-        teluguThemeTitle: "ఈరోజు వాగ్దానం",
-        themeTitle: "Daily Blessing",
-        backgroundUrl: "/images/hero-sunrise-cross.jpg",
-        templateId: "promise-poster",
-      });
     }
   };
 
@@ -191,28 +180,28 @@ export default function AdminDashboardPage() {
     const data = await res.json();
     if (data?.settings) {
       setSettings(data.settings);
-      showToast("Church branding settings saved!");
+      showToast("Grace Mandhir branding settings saved!");
     }
   };
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#FFF7FB] via-[#FCEBF4] to-[#F7DCEC] text-slate-900">
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#F4F9FF] via-[#EAF5FF] to-[#DCEBFA] text-slate-900">
         <Navbar />
         <main className="flex-1 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-pink-200">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D41C68] to-[#75145E] text-white flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-blue-200">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#092D59] to-[#12549A] text-[#FFC629] flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Lock className="w-7 h-7" />
             </div>
-            <h1 className="font-serif text-2xl font-bold text-center text-[#75145E]">
-              Church Admin Login
+            <h1 className="font-brand-cinzel text-2xl font-extrabold text-center text-[#092D59]">
+              GRACE MANDHIR LOGIN
             </h1>
-            <p className="font-telugu text-xs text-center text-slate-600 mt-1 mb-6">
-              Grace Mandhir Church – క్యాలెండర్ వాక్యాలు &amp; QR కోడ్‌ల నిర్వహణ
+            <p className="font-nav-unique text-xs text-center text-slate-600 mt-1 mb-6">
+              క్యాలెండర్ వాక్యాలు &amp; QR కోడ్‌ల నిర్వహణ
             </p>
 
             {authError && (
-              <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold">
+              <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold">
                 {authError}
               </div>
             )}
@@ -226,7 +215,7 @@ export default function AdminDashboardPage() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-pink-200 text-sm font-bold focus:outline-none focus:border-[#C81D66]"
+                  className="w-full px-4 py-3 rounded-xl border border-blue-200 text-sm font-bold focus:outline-none focus:border-[#12549A]"
                 />
               </div>
 
@@ -238,19 +227,19 @@ export default function AdminDashboardPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-pink-200 text-sm font-bold focus:outline-none focus:border-[#C81D66]"
+                  className="w-full px-4 py-3 rounded-xl border border-blue-200 text-sm font-bold focus:outline-none focus:border-[#12549A]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white font-bold text-sm shadow-lg hover:opacity-95 transition-opacity"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#092D59] to-[#12549A] text-white font-bold text-sm shadow-lg hover:opacity-95 transition-opacity"
               >
                 Sign In to Admin Dashboard
               </button>
             </form>
 
-            <div className="mt-4 p-3 rounded-xl bg-pink-50/80 border border-pink-100 text-[11px] text-slate-600 text-center">
+            <div className="mt-4 p-3 rounded-xl bg-[#EAF5FF] border border-blue-200 text-[11px] text-[#092D59] text-center">
               Demo Credentials pre-filled: <strong>admin@gracemandhir.org</strong>{" "}
               / <strong>Grace@2027</strong>
             </div>
@@ -261,26 +250,25 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#FFF7FB] via-[#FCEBF4] to-[#F7DCEC] text-slate-900">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#F4F9FF] via-[#EAF5FF] to-[#DCEBFA] text-slate-900">
       <Navbar />
 
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-[#75145E] text-white text-sm font-bold shadow-2xl">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-[#092D59] text-white text-sm font-bold shadow-2xl">
           <Check className="w-4 h-4 text-[#FFC629]" />
           <span>{toast}</span>
         </div>
       )}
 
       <main className="max-w-[1360px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
-        {/* Top Admin Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-pink-200">
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-blue-200">
           <div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#75145E]">
-              Grace Mandhir Church – Admin Dashboard
+            <h1 className="font-brand-cinzel text-2xl sm:text-3xl font-extrabold text-[#092D59]">
+              GRACE MANDHIR – Admin Dashboard
             </h1>
-            <p className="font-telugu text-xs sm:text-sm font-semibold text-slate-600">
+            <p className="font-nav-unique text-xs sm:text-sm font-semibold text-slate-600">
               Manage Daily Telugu &amp; English Bible Verses, Calendar QR Codes,
-              Wallpaper Backgrounds &amp; Church Assets
+              Wallpaper Backgrounds &amp; Branding
             </p>
           </div>
 
@@ -290,8 +278,8 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab("verses")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all ${
                 activeTab === "verses"
-                  ? "bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white shadow"
-                  : "bg-white text-slate-700 border border-pink-200"
+                  ? "bg-gradient-to-r from-[#092D59] to-[#12549A] text-white shadow"
+                  : "bg-white text-[#092D59] border border-blue-200"
               }`}
             >
               Verses &amp; QR Codes ({verses.length})
@@ -301,8 +289,8 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab("backgrounds")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all ${
                 activeTab === "backgrounds"
-                  ? "bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white shadow"
-                  : "bg-white text-slate-700 border border-pink-200"
+                  ? "bg-gradient-to-r from-[#092D59] to-[#12549A] text-white shadow"
+                  : "bg-white text-[#092D59] border border-blue-200"
               }`}
             >
               Backgrounds ({backgrounds.length})
@@ -312,11 +300,11 @@ export default function AdminDashboardPage() {
               onClick={() => setActiveTab("branding")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all ${
                 activeTab === "branding"
-                  ? "bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white shadow"
-                  : "bg-white text-slate-700 border border-pink-200"
+                  ? "bg-gradient-to-r from-[#092D59] to-[#12549A] text-white shadow"
+                  : "bg-white text-[#092D59] border border-blue-200"
               }`}
             >
-              Church Branding
+              Branding
             </button>
             <button
               type="button"
@@ -324,7 +312,7 @@ export default function AdminDashboardPage() {
                 sessionStorage.removeItem("gmc_admin_token");
                 setIsAuthenticated(false);
               }}
-              className="inline-flex items-center gap-1 px-3.5 py-2 rounded-full bg-rose-100 text-rose-800 text-xs font-bold"
+              className="inline-flex items-center gap-1 px-3.5 py-2 rounded-full bg-red-100 text-red-800 text-xs font-bold"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Logout</span>
@@ -332,13 +320,11 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* TAB 1: VERSES & QR CODES MANAGEMENT */}
         {activeTab === "verses" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6">
-            {/* Add / Edit Verse Form (5 Cols) */}
-            <div className="lg:col-span-5 bg-white rounded-3xl p-6 shadow-lg border border-pink-100 h-fit">
-              <h2 className="flex items-center gap-2 font-telugu text-lg font-extrabold text-[#75145E] mb-4">
-                <Plus className="w-5 h-5 text-[#C81D66]" />
+            <div className="lg:col-span-5 bg-white rounded-3xl p-6 shadow-lg border border-blue-100 h-fit">
+              <h2 className="flex items-center gap-2 font-nav-unique text-lg font-extrabold text-[#092D59] mb-4">
+                <Plus className="w-5 h-5 text-[#12549A]" />
                 <span>వాక్యాన్ని జోడించండి / సవరించండి (Add / Edit Date Verse)</span>
               </h2>
 
@@ -353,7 +339,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setFormVerse({ ...formVerse, date: e.target.value })
                     }
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 text-sm font-bold"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-blue-200 text-sm font-bold"
                     required
                   />
                 </div>
@@ -372,7 +358,7 @@ export default function AdminDashboardPage() {
                       })
                     }
                     placeholder="ఉదా: నేను నిన్ను బలపరచి నీకు సహాయము చేయుదును."
-                    className="w-full px-3.5 py-2 rounded-xl border border-pink-200 font-telugu text-sm"
+                    className="w-full px-3.5 py-2 rounded-xl border border-blue-200 font-card-display text-sm"
                     required
                   />
                 </div>
@@ -391,7 +377,7 @@ export default function AdminDashboardPage() {
                       })
                     }
                     placeholder="e.g. I will strengthen you and help you."
-                    className="w-full px-3.5 py-2 rounded-xl border border-pink-200 text-sm"
+                    className="w-full px-3.5 py-2 rounded-xl border border-blue-200 text-sm"
                     required
                   />
                 </div>
@@ -411,7 +397,7 @@ export default function AdminDashboardPage() {
                         })
                       }
                       placeholder="యెషయా 41:10"
-                      className="w-full px-3 py-2 rounded-xl border border-pink-200 font-telugu text-sm"
+                      className="w-full px-3 py-2 rounded-xl border border-blue-200 font-card-display text-sm"
                     />
                   </div>
                   <div>
@@ -428,21 +414,20 @@ export default function AdminDashboardPage() {
                         })
                       }
                       placeholder="Isaiah 41:10"
-                      className="w-full px-3 py-2 rounded-xl border border-pink-200 text-sm"
+                      className="w-full px-3 py-2 rounded-xl border border-blue-200 text-sm"
                     />
                   </div>
                 </div>
 
-                {/* Live QR Preview for Selected Date */}
                 {formVerse.date && (
-                  <div className="p-3 rounded-2xl bg-pink-50/70 border border-pink-200 flex items-center gap-3">
+                  <div className="p-3 rounded-2xl bg-[#EAF5FF] border border-blue-200 flex items-center gap-3">
                     <QrCodeBox
                       date={formVerse.date}
                       size={64}
                       showCenterLogo={false}
                     />
                     <div className="text-xs">
-                      <p className="font-extrabold text-[#75145E]">
+                      <p className="font-extrabold text-[#092D59]">
                         Auto-Generated Date QR Code
                       </p>
                       <p className="text-slate-600">
@@ -454,36 +439,36 @@ export default function AdminDashboardPage() {
 
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white font-bold text-sm shadow-lg"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-[#092D59] to-[#12549A] text-white font-bold text-sm shadow-lg"
                 >
-                  <Save className="w-4 h-4" />
+                  <Save className="w-4 h-4 text-[#FFC629]" />
                   <span>Save Verse &amp; Generate QR Code</span>
                 </button>
               </form>
             </div>
 
-            {/* Existing Verses & QR List (7 Cols) */}
             <div className="lg:col-span-7 space-y-3">
               {verses.map((v) => (
                 <div
                   key={v.id}
-                  className="bg-white rounded-2xl p-4 shadow-sm border border-pink-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                  className="bg-white rounded-2xl p-4 shadow-sm border border-blue-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
                 >
                   <div className="flex items-start gap-3.5">
                     <QrCodeBox date={v.date} size={72} showCenterLogo={false} />
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#FDF2F8] text-[#C81D66] text-xs font-extrabold border border-pink-200">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#EAF5FF] text-[#092D59] text-xs font-extrabold border border-blue-200">
                           {v.date}
                         </span>
-                        <span className="font-telugu text-xs font-extrabold text-[#75145E]">
-                          {v.teluguReference} ({v.englishReference})
+                        <span className="font-nav-unique text-xs font-extrabold text-[#12549A]">
+                          {v.teluguReference.replace(".", " ")} (
+                          {v.englishReference})
                         </span>
                       </div>
-                      <p className="font-telugu text-sm font-bold text-slate-900 mt-1">
-                        {v.teluguVerse}
+                      <p className="font-card-display text-sm font-bold text-[#092D59] mt-1">
+                        {v.teluguVerse.replace(/\n/g, " ")}
                       </p>
-                      <p className="font-serif italic text-xs text-slate-600 mt-0.5">
+                      <p className="font-body-editorial italic text-sm text-slate-600 mt-0.5">
                         {v.englishVerse}
                       </p>
                     </div>
@@ -492,7 +477,7 @@ export default function AdminDashboardPage() {
                   <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                     <Link
                       href={`/verse/${v.date}`}
-                      className="p-2 rounded-xl bg-pink-50 hover:bg-pink-100 text-[#75145E]"
+                      className="p-2 rounded-xl bg-[#EAF5FF] hover:bg-blue-100 text-[#092D59]"
                       title="Open Verse Page"
                     >
                       <ExternalLink className="w-4 h-4" />
@@ -508,7 +493,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => handleDeleteVerse(v.id, v.date)}
-                      className="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600"
+                      className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600"
                       title="Delete Verse"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -520,12 +505,11 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* TAB 2: WALLPAPER BACKGROUNDS */}
         {activeTab === "backgrounds" && (
           <div className="pt-6 space-y-6">
-            <div className="bg-white rounded-3xl p-6 shadow-md border border-pink-100 flex flex-wrap items-center justify-between gap-4">
+            <div className="bg-white rounded-3xl p-6 shadow-md border border-blue-100 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="font-telugu text-lg font-extrabold text-[#75145E]">
+                <h2 className="font-nav-unique text-lg font-extrabold text-[#092D59]">
                   వాల్పేపర్ నేపథ్య చిత్రాలు (Manage Christian Backgrounds)
                 </h2>
                 <p className="text-xs text-slate-600">
@@ -533,8 +517,8 @@ export default function AdminDashboardPage() {
                   backgrounds for daily wallpapers.
                 </p>
               </div>
-              <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white text-xs font-extrabold shadow">
-                <Upload className="w-4 h-4" />
+              <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-[#092D59] to-[#12549A] text-white text-xs font-extrabold shadow">
+                <Upload className="w-4 h-4 text-[#FFC629]" />
                 <span>Upload New Background Image</span>
                 <input
                   type="file"
@@ -549,7 +533,7 @@ export default function AdminDashboardPage() {
               {backgrounds.map((bg) => (
                 <div
                   key={bg.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-md border border-pink-100"
+                  className="bg-white rounded-2xl overflow-hidden shadow-md border border-blue-100"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -559,12 +543,12 @@ export default function AdminDashboardPage() {
                   />
                   <div className="p-4 flex items-center justify-between">
                     <div>
-                      <p className="font-telugu text-sm font-extrabold text-[#75145E]">
+                      <p className="font-nav-unique text-sm font-extrabold text-[#092D59]">
                         {bg.teluguName}
                       </p>
                       <p className="text-xs text-slate-600">{bg.name}</p>
                     </div>
-                    <ImageIcon className="w-5 h-5 text-[#C81D66]" />
+                    <ImageIcon className="w-5 h-5 text-[#12549A]" />
                   </div>
                 </div>
               ))}
@@ -572,20 +556,19 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* TAB 3: CHURCH BRANDING & LOGOS */}
         {activeTab === "branding" && (
           <div className="pt-6 max-w-2xl mx-auto">
             <form
               onSubmit={handleSaveChurchSettings}
-              className="bg-white rounded-3xl p-6 shadow-lg border border-pink-100 space-y-4"
+              className="bg-white rounded-3xl p-6 shadow-lg border border-blue-100 space-y-4"
             >
-              <h2 className="font-serif text-xl font-bold text-[#75145E]">
-                Church Branding &amp; Contact Settings
+              <h2 className="font-brand-cinzel text-xl font-bold text-[#092D59]">
+                Grace Mandhir Branding &amp; Contact Settings
               </h2>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Church Name
+                  Brand Name
                 </label>
                 <input
                   type="text"
@@ -593,7 +576,7 @@ export default function AdminDashboardPage() {
                   onChange={(e) =>
                     setSettings({ ...settings, churchName: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm font-bold"
+                  className="w-full px-4 py-2.5 rounded-xl border border-blue-200 text-sm font-bold"
                 />
               </div>
 
@@ -607,7 +590,7 @@ export default function AdminDashboardPage() {
                   onChange={(e) =>
                     setSettings({ ...settings, tagline: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm font-bold"
+                  className="w-full px-4 py-2.5 rounded-xl border border-blue-200 text-sm font-bold"
                 />
               </div>
 
@@ -621,16 +604,16 @@ export default function AdminDashboardPage() {
                   onChange={(e) =>
                     setSettings({ ...settings, phoneNumbers: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm font-bold"
+                  className="w-full px-4 py-2.5 rounded-xl border border-blue-200 text-sm font-bold"
                 />
               </div>
 
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white font-bold text-sm shadow"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#092D59] to-[#12549A] text-white font-bold text-sm shadow"
               >
-                <Save className="w-4 h-4" />
-                <span>Save Church Settings</span>
+                <Save className="w-4 h-4 text-[#FFC629]" />
+                <span>Save Settings</span>
               </button>
             </form>
           </div>

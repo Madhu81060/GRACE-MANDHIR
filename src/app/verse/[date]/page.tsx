@@ -40,7 +40,7 @@ export default function DateVersePage() {
     resolveVerseForDate(rawDate)
   );
   const [activeTemplate, setActiveTemplate] = useState<
-    "royal-navy" | "royal-burgundy" | "promise-poster" | "mobile-sunrise"
+    "royal-navy" | "promise-poster" | "mobile-sunrise"
   >("royal-navy");
   const [userPhotoUrl, setUserPhotoUrl] = useState<string>("");
   const [showDateModal, setShowDateModal] = useState<boolean>(false);
@@ -75,8 +75,6 @@ export default function DateVersePage() {
     backgroundUrl:
       activeTemplate === "royal-navy"
         ? "/images/navy-theme-ref.jpg"
-        : activeTemplate === "royal-burgundy"
-        ? "/images/royal-theme-ref.jpg"
         : activeTemplate === "promise-poster"
         ? "/images/vagdanam-sample.jpg"
         : "/images/hero-sunrise-cross.jpg",
@@ -137,7 +135,7 @@ export default function DateVersePage() {
       " "
     )}"\n— ${verse.teluguReference}\n\n"${verse.englishVerse}"\n— ${
       verse.englishReference
-    }\n\n🙏 *Grace Mandhir Church*\n📲 ${pageUrl}`;
+    }\n\n🙏 *GRACE MANDHIR*\n📲 ${pageUrl}`;
 
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
@@ -148,7 +146,7 @@ export default function DateVersePage() {
           });
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
-              title: "Grace Mandhir Church Daily Promise",
+              title: "GRACE MANDHIR Daily Promise",
               text: shareText,
               files: [file],
             });
@@ -156,7 +154,7 @@ export default function DateVersePage() {
           }
         }
         await navigator.share({
-          title: "Grace Mandhir Church Daily Promise",
+          title: "GRACE MANDHIR Daily Promise",
           text: shareText,
           url: pageUrl,
         });
@@ -170,14 +168,9 @@ export default function DateVersePage() {
 
   const prevDate = getAdjacentDate(rawDate, -1);
   const nextDate = getAdjacentDate(rawDate, 1);
-  const isBurgundy = activeTemplate === "royal-burgundy";
 
   return (
-    <div
-      className={`min-h-screen flex flex-col text-slate-900 relative overflow-x-hidden ${
-        isBurgundy ? "bg-[#FBE5F1]" : "bg-[#EAF5FF]"
-      }`}
-    >
+    <div className="min-h-screen flex flex-col text-slate-900 relative overflow-x-hidden bg-[#EAF5FF]">
       <Navbar />
 
       {/* Toast Notification */}
@@ -191,23 +184,13 @@ export default function DateVersePage() {
       {/* Atmospheric Christian Sunrise & Draped Cross Background (Matches media_1793955774641_cdb9e1de.jpg) */}
       <div className="relative flex-1 flex flex-col justify-between">
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {isBurgundy ? (
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 62% 35%, #FFFDF9 0%, #FCEBF3 38%, #F7CEE2 78%, #F2BCD7 100%)",
-              }}
-            />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 58% 34%, #FFFFFF 0%, #F2F8FF 42%, #DDF0FF 78%, #C8E4FF 100%)",
-              }}
-            />
-          )}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 58% 34%, #FFFFFF 0%, #F2F8FF 42%, #DDF0FF 78%, #C8E4FF 100%)",
+            }}
+          />
 
           {/* Top-Right Green Tree Leaves & Draped Cross on Sunlit Hill */}
           <div className="hidden lg:block absolute top-0 right-0 w-[360px] h-[480px] opacity-95">
@@ -255,20 +238,18 @@ export default function DateVersePage() {
           </div>
 
           {/* Bottom Royal Blue Curved Wave Footer Backdrop */}
-          {!isBurgundy && (
-            <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none">
-              <svg
-                viewBox="0 0 1440 140"
-                preserveAspectRatio="none"
-                className="w-full h-full"
-              >
-                <path
-                  d="M0 45 Q360 110 720 75 T1440 35 L1440 140 L0 140 Z"
-                  fill="#092D59"
-                />
-              </svg>
-            </div>
-          )}
+          <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none">
+            <svg
+              viewBox="0 0 1440 140"
+              preserveAspectRatio="none"
+              className="w-full h-full"
+            >
+              <path
+                d="M0 45 Q360 110 720 75 T1440 35 L1440 140 L0 140 Z"
+                fill="#092D59"
+              />
+            </svg>
+          </div>
         </div>
 
         {/* Main Content Grid */}
@@ -278,45 +259,34 @@ export default function DateVersePage() {
             <div className="lg:col-span-5 flex flex-col items-center">
               {/* Theme Switcher Pills + Upload Photo */}
               <div className="w-full max-w-[420px] flex flex-wrap items-center justify-between gap-1.5 mb-2.5">
-                <div className="inline-flex rounded-full bg-white/95 p-1 shadow-sm border border-blue-200">
+                <div className="inline-flex rounded-full bg-white/95 p-1 shadow-sm border border-[#B8D8F8]">
                   <button
                     type="button"
                     onClick={() => setActiveTemplate("royal-navy")}
-                    className={`px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                    className={`px-3.5 py-1 rounded-full font-nav-unique text-[11px] font-extrabold transition-all ${
                       activeTemplate === "royal-navy"
                         ? "bg-gradient-to-r from-[#092D59] to-[#12549A] text-white shadow"
-                        : "text-slate-700 hover:text-[#092D59]"
+                        : "text-[#092D59] hover:bg-blue-50"
                     }`}
                   >
-                    Royal Navy
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTemplate("royal-burgundy")}
-                    className={`px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
-                      activeTemplate === "royal-burgundy"
-                        ? "bg-gradient-to-r from-[#C2185B] to-[#7B0938] text-white shadow"
-                        : "text-slate-700 hover:text-[#880E4F]"
-                    }`}
-                  >
-                    Burgundy
+                    Royal Navy Card
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTemplate("promise-poster")}
-                    className={`px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                    className={`px-3.5 py-1 rounded-full font-nav-unique text-[11px] font-extrabold transition-all ${
                       activeTemplate === "promise-poster"
                         ? "bg-[#186627] text-white shadow"
-                        : "text-slate-700 hover:text-[#186627]"
+                        : "text-[#092D59] hover:bg-blue-50"
                     }`}
                   >
-                    Green
+                    Green Vagdanam
                   </button>
                 </div>
 
-                <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white hover:bg-blue-50 text-[#092D59] border border-blue-200 text-[11px] font-extrabold shadow-sm">
-                  <Upload className="w-3.5 h-3.5" />
-                  <span className="font-telugu">మీ ఫోటో</span>
+                <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white hover:bg-blue-50 text-[#092D59] border border-[#B8D8F8] text-[11px] font-extrabold shadow-sm">
+                  <Upload className="w-3.5 h-3.5 text-[#12549A]" />
+                  <span className="font-nav-unique">మీ ఫోటో</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -344,13 +314,9 @@ export default function DateVersePage() {
                 <div
                   onClick={() => setShowDateModal(true)}
                   title="Click to select another calendar date"
-                  className={`cursor-pointer px-10 sm:px-14 py-3.5 rounded-full shadow-[0_10px_26px_rgba(9,45,89,0.3)] hover:scale-[1.02] transition-transform border-2 ${
-                    isBurgundy
-                      ? "bg-gradient-to-r from-[#6E052E] via-[#A3104B] to-[#6E052E] border-[#F5C242]"
-                      : "bg-gradient-to-r from-[#062347] via-[#12549A] to-[#062347] border-[#93C5FD]/60"
-                  }`}
+                  className="cursor-pointer px-8 sm:px-14 py-3.5 rounded-full shadow-[0_10px_26px_rgba(9,45,89,0.3)] hover:scale-[1.02] transition-transform border-2 bg-gradient-to-r from-[#062347] via-[#12549A] to-[#062347] border-[#93C5FD]/60"
                 >
-                  <h1 className="font-telugu text-2xl sm:text-4xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]">
+                  <h1 className="font-card-display text-xl sm:text-4xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]">
                     ఈరోజు దేవుని వాక్యం
                   </h1>
                 </div>
@@ -358,21 +324,13 @@ export default function DateVersePage() {
                 {/* Open Holy Bible Icon with Golden Lines Below Banner (Matches media_1793955774641_cdb9e1de.jpg) */}
                 <div className="flex items-center justify-center gap-3 mt-3 w-64">
                   <span className="h-[1.5px] flex-1 bg-gradient-to-r from-transparent to-[#D49212]" />
-                  <BookOpen
-                    className={`w-7 h-7 ${
-                      isBurgundy ? "text-[#880E4F]" : "text-[#092D59]"
-                    }`}
-                  />
+                  <BookOpen className="w-7 h-7 text-[#092D59]" />
                   <span className="h-[1.5px] flex-1 bg-gradient-to-l from-transparent to-[#D49212]" />
                 </div>
               </div>
 
               {/* Main Calligraphic Editorial Serif Telugu Verse (Distinct Body Font) */}
-              <h2
-                className={`font-body-serif-te text-2xl sm:text-4xl xl:text-[50px] font-black leading-[1.4] max-w-2xl px-2 drop-shadow-[0_2px_10px_rgba(255,255,255,0.95)] ${
-                  isBurgundy ? "text-[#6E0630]" : "text-[#092D59]"
-                }`}
-              >
+              <h2 className="font-body-serif-te text-2xl sm:text-4xl xl:text-[50px] font-black leading-[1.4] max-w-2xl px-2 drop-shadow-[0_2px_10px_rgba(255,255,255,0.95)] text-[#092D59]">
                 {verse.teluguVerse.replace(/\n/g, " ")}
               </h2>
 
@@ -381,7 +339,7 @@ export default function DateVersePage() {
                 <svg viewBox="0 0 500 35" className="w-full h-full">
                   <path
                     d="M40 22 Q240 4, 450 26 Q340 12, 40 22 Z"
-                    fill={isBurgundy ? "#9B0F48" : "#12549A"}
+                    fill="#12549A"
                   />
                 </svg>
               </div>
@@ -393,40 +351,28 @@ export default function DateVersePage() {
               </div>
 
               {/* Bold Italic Editorial Serif English Verse (Cormorant Garamond) */}
-              <p
-                className={`font-body-editorial italic text-2xl sm:text-4xl font-bold leading-snug max-w-xl mt-5 px-2 ${
-                  isBurgundy ? "text-[#5E062A]" : "text-[#092D59]"
-                }`}
-              >
+              <p className="font-body-editorial italic text-2xl sm:text-4xl font-bold leading-snug max-w-xl mt-5 px-2 text-[#092D59]">
                 {verse.englishVerse}
               </p>
 
               {/* English Reference with Ornamental Lines */}
               <div className="flex items-center justify-center gap-3 mt-2 w-full max-w-md px-4">
                 <span className="h-[1.5px] flex-1 bg-gradient-to-r from-transparent to-[#092D59]/60" />
-                <span
-                  className={`font-brand-cinzel text-sm sm:text-base font-extrabold tracking-wider ${
-                    isBurgundy ? "text-[#6E0630]" : "text-[#092D59]"
-                  }`}
-                >
+                <span className="font-brand-cinzel text-sm sm:text-base font-extrabold tracking-wider text-[#092D59]">
                   {verse.englishReference}
                 </span>
                 <span className="h-[1.5px] flex-1 bg-gradient-to-l from-transparent to-[#092D59]/60" />
               </div>
 
               {/* 3 Prominent Action Pill Buttons (డౌన్‌లోడ్ | పంచుకోండి | వాల్పేపర్‌గా సేవ్ చేయండి) */}
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-4 w-full">
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
                 {/* 1. డౌన్‌లోడ్ (Deep Navy Pill Button) */}
                 <button
                   type="button"
                   onClick={() => handleDownload("png")}
-                  className={`inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-white font-telugu text-base sm:text-lg font-extrabold shadow-[0_10px_24px_rgba(9,45,89,0.38)] transition-all transform hover:-translate-y-0.5 ${
-                    isBurgundy
-                      ? "bg-gradient-to-b from-[#D81B60] to-[#6E052E]"
-                      : "bg-gradient-to-b from-[#12549A] via-[#092D59] to-[#051B38] hover:from-[#092D59] hover:to-[#12549A]"
-                  }`}
+                  className="inline-flex items-center justify-center gap-2.5 px-7 sm:px-8 py-3.5 rounded-full text-white font-nav-unique text-base sm:text-lg font-extrabold shadow-[0_10px_24px_rgba(9,45,89,0.38)] transition-all transform hover:-translate-y-0.5 bg-gradient-to-b from-[#12549A] via-[#092D59] to-[#051B38] hover:from-[#092D59] hover:to-[#12549A]"
                 >
-                  <Download className="w-5 h-5" />
+                  <Download className="w-5 h-5 text-[#FFC629]" />
                   <span>డౌన్‌లోడ్</span>
                 </button>
 
@@ -618,7 +564,7 @@ export default function DateVersePage() {
                     " "
                   )}" (${verse.teluguReference})\n"${verse.englishVerse}" (${
                     verse.englishReference
-                  })\n🙏 Grace Mandhir Church: ${
+                  })\n🙏 GRACE MANDHIR: ${
                     typeof window !== "undefined" ? window.location.href : ""
                   }`
                 )}`}

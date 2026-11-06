@@ -30,28 +30,28 @@ export default function CalendarDirectoryPage() {
   const daysArray = Array.from({ length: activeMonth.days }, (_, i) => i + 1);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#FFF7FB] via-[#FCEBF4] to-[#F7DCEC] text-slate-900">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#F4F9FF] via-[#EAF5FF] to-[#DCEBFA] text-slate-900">
       <Navbar />
 
       <main className="max-w-[1360px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
         {/* Top Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-pink-200">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-blue-200">
           <div>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDF2F8] border border-pink-200 text-[#8B1346] text-xs font-extrabold mb-2">
-              <QrCode className="w-3.5 h-3.5" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-blue-200 text-[#092D59] text-xs font-extrabold mb-2 shadow-sm">
+              <QrCode className="w-3.5 h-3.5 text-[#12549A]" />
               <span>365 Days Unique QR Code Christian Calendar</span>
             </span>
-            <h1 className="font-telugu text-3xl sm:text-4xl font-black text-[#75145E]">
+            <h1 className="font-body-serif-te text-3xl sm:text-4xl font-black text-[#092D59]">
               2027 క్రైస్తవ క్యాలెండర్ &amp; QR కోడ్‌లు
             </h1>
-            <p className="font-telugu text-sm font-semibold text-slate-700 mt-1">
+            <p className="font-nav-unique text-sm font-semibold text-slate-700 mt-1">
               ప్రతి తేదీకి ఒక ప్రత్యేకమైన QR కోడ్ మరియు దేవుని వాగ్దాన వాక్యం. ఏ తేదీనైనా క్లిక్
               చేసి వాల్పేపర్ పొందండి.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="inline-flex rounded-full bg-white p-1 border border-pink-200 shadow-sm">
+            <div className="inline-flex rounded-full bg-white p-1 border border-blue-200 shadow-sm">
               {["2026", "2027"].map((yr) => (
                 <button
                   key={yr}
@@ -59,8 +59,8 @@ export default function CalendarDirectoryPage() {
                   onClick={() => setSelectedYear(yr)}
                   className={`px-4 py-1.5 rounded-full text-xs font-extrabold transition-all ${
                     selectedYear === yr
-                      ? "bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white"
-                      : "text-slate-700 hover:text-[#75145E]"
+                      ? "bg-gradient-to-r from-[#092D59] to-[#12549A] text-white"
+                      : "text-slate-700 hover:text-[#092D59]"
                   }`}
                 >
                   {yr} Calendar
@@ -71,9 +71,9 @@ export default function CalendarDirectoryPage() {
             <button
               type="button"
               onClick={() => window.print()}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-pink-50 text-[#75145E] border border-pink-200 text-xs font-extrabold shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-blue-50 text-[#092D59] border border-blue-200 text-xs font-extrabold shadow-sm"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-4 h-4 text-[#12549A]" />
               <span>Print Month QR Sheet</span>
             </button>
           </div>
@@ -90,11 +90,11 @@ export default function CalendarDirectoryPage() {
                 onClick={() => setSelectedMonthIdx(idx)}
                 className={`px-4 py-2.5 rounded-2xl font-bold text-xs whitespace-nowrap transition-all shrink-0 border ${
                   active
-                    ? "bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white border-transparent shadow-md scale-105"
-                    : "bg-white hover:bg-pink-50 text-slate-800 border-pink-100"
+                    ? "bg-gradient-to-r from-[#092D59] to-[#12549A] text-white border-transparent shadow-md scale-105"
+                    : "bg-white hover:bg-blue-50 text-[#092D59] border-blue-100"
                 }`}
               >
-                <span className="font-telugu block text-sm font-extrabold">
+                <span className="font-nav-unique block text-sm font-extrabold">
                   {m.te}
                 </span>
                 <span className="opacity-80">{m.en}</span>
@@ -114,17 +114,17 @@ export default function CalendarDirectoryPage() {
             return (
               <div
                 key={dateStr}
-                className="bg-white/95 rounded-2xl p-4 shadow-md border border-pink-100 hover:border-[#C81D66] hover:shadow-xl transition-all flex flex-col justify-between group"
+                className="bg-white/98 rounded-2xl p-4 shadow-md border border-blue-100 hover:border-[#12549A] hover:shadow-xl transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FDF2F8] text-[#C81D66] text-[11px] font-extrabold border border-pink-200">
-                        <Calendar className="w-3 h-3" />
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#EAF5FF] text-[#092D59] text-[11px] font-extrabold border border-blue-200">
+                        <Calendar className="w-3 h-3 text-[#12549A]" />
                         {dateStr}
                       </span>
-                      <h3 className="font-telugu text-base font-extrabold text-[#75145E] mt-1.5">
-                        {verse.teluguReference}
+                      <h3 className="font-body-serif-te text-base font-extrabold text-[#092D59] mt-1.5">
+                        {verse.teluguReference.replace(".", " ")}
                       </h3>
                       <p className="text-xs font-bold text-slate-500">
                         {verse.englishReference}
@@ -140,28 +140,28 @@ export default function CalendarDirectoryPage() {
                     </Link>
                   </div>
 
-                  <p className="font-telugu text-xs font-bold text-slate-800 line-clamp-2 leading-relaxed">
-                    &ldquo;{verse.teluguVerse}&rdquo;
+                  <p className="font-card-display text-xs font-bold text-[#092D59] line-clamp-2 leading-relaxed">
+                    &ldquo;{verse.teluguVerse.replace(/\n/g, " ")}&rdquo;
                   </p>
-                  <p className="font-serif italic text-xs text-slate-600 line-clamp-2 mt-1">
+                  <p className="font-body-editorial italic text-sm font-semibold text-slate-600 line-clamp-2 mt-1">
                     &ldquo;{verse.englishVerse}&rdquo;
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-pink-100 flex items-center justify-between gap-2">
+                <div className="mt-4 pt-3 border-t border-blue-100 flex items-center justify-between gap-2">
                   <Link
                     href={`/verse/${dateStr}`}
-                    className="inline-flex items-center gap-1 text-xs font-extrabold text-[#C81D66] group-hover:translate-x-0.5 transition-transform"
+                    className="inline-flex items-center gap-1 text-xs font-extrabold text-[#12549A] group-hover:translate-x-0.5 transition-transform"
                   >
-                    <span className="font-telugu">వాగ్దానం చూడండి</span>
+                    <span className="font-nav-unique">వాగ్దానం చూడండి</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
 
                   <Link
                     href={`/studio?date=${dateStr}`}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-pink-50 hover:bg-pink-100 text-[#75145E] text-[11px] font-bold"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#EAF5FF] hover:bg-blue-100 text-[#092D59] text-[11px] font-bold"
                   >
-                    <Sparkles className="w-3 h-3" />
+                    <Sparkles className="w-3 h-3 text-[#D49212]" />
                     <span>Customize</span>
                   </Link>
                 </div>

@@ -24,12 +24,12 @@ export default function QrScannerPage() {
   const [cameraActive, setCameraActive] = useState<boolean>(false);
   const [cameraError, setCameraError] = useState<string>("");
   const [scannedResult, setScannedResult] = useState<string>("");
-  const [manualDate, setManualDate] = useState<string>("2026-11-05");
+  const [manualDate, setManualDate] = useState<string>("2027-01-05");
 
   const extractDateAndNavigate = (rawText: string) => {
     setScannedResult(rawText);
     const match = rawText.match(/(\d{4}-\d{2}-\d{2})/);
-    const targetDate = match ? match[1] : "2026-11-05";
+    const targetDate = match ? match[1] : "2027-01-05";
     setTimeout(() => {
       router.push(`/verse/${targetDate}`);
     }, 650);
@@ -52,12 +52,11 @@ export default function QrScannerPage() {
           await videoRef.current.play();
           tick();
         }
-      } catch (err) {
+      } catch {
         setCameraError(
           "కెమెరా అనుమతి లభించలేదు లేదా కెమెరా అందుబాటులో లేదు. మీరు QR చిత్రాన్ని అప్‌లోడ్ చేయవచ్చు లేదా దిగువ తేదీని ఎంచుకోవచ్చు."
         );
         setCameraActive(false);
-        console.warn("Camera access error:", err);
       }
     }
 
@@ -137,19 +136,19 @@ export default function QrScannerPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#FFF7FB] via-[#FCEBF4] to-[#F7DCEC] text-slate-900">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#F4F9FF] via-[#EAF5FF] to-[#DCEBFA] text-slate-900">
       <Navbar />
 
       <main className="max-w-[1180px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
         <div className="text-center max-w-2xl mx-auto mb-8">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FDF2F8] border border-pink-200 text-[#8B1346] text-xs font-extrabold mb-2">
-            <QrCode className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white border border-blue-200 text-[#092D59] text-xs font-extrabold mb-2 shadow-sm">
+            <QrCode className="w-3.5 h-3.5 text-[#12549A]" />
             <span>Grace Mandhir 2027 Christian Calendar QR Scanner</span>
           </span>
-          <h1 className="font-telugu text-3xl sm:text-4xl font-black text-[#75145E]">
+          <h1 className="font-body-serif-te text-3xl sm:text-4xl font-black text-[#092D59]">
             QR కోడ్ స్కాన్ చేయండి
           </h1>
-          <p className="font-telugu text-sm sm:text-base font-semibold text-slate-700 mt-2">
+          <p className="font-nav-unique text-sm sm:text-base font-semibold text-slate-700 mt-2">
             మీ 2027 క్రైస్తవ క్యాలెండర్‌పై ఉన్న QR కోడ్‌ను కెమెరాతో స్కాన్ చేయండి లేదా QR
             ఇమేజ్‌ను అప్‌లోడ్ చేసి ఆ రోజు దేవుని వాగ్దాన వాల్పేపర్‌ను పొందండి.
           </p>
@@ -157,8 +156,8 @@ export default function QrScannerPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Live Camera Viewfinder & Upload QR Image (7 Cols) */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-6 shadow-xl border border-pink-100">
-            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center border-2 border-[#C81D66]/40">
+          <div className="lg:col-span-7 bg-white rounded-3xl p-6 shadow-xl border border-blue-100">
+            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#061A36] flex flex-col items-center justify-center border-2 border-[#12549A]/40">
               {cameraActive ? (
                 <>
                   <video
@@ -166,7 +165,6 @@ export default function QrScannerPage() {
                     className="w-full h-full object-cover"
                     muted
                   />
-                  {/* Scanning Target Frame Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="w-56 h-56 rounded-2xl border-4 border-[#FFC629] shadow-[0_0_0_9999px_rgba(0,0,0,0.45)] relative">
                       <div className="absolute inset-x-2 top-1/2 h-0.5 bg-[#FFC629] animate-pulse" />
@@ -175,13 +173,13 @@ export default function QrScannerPage() {
                 </>
               ) : (
                 <div className="text-center p-6 text-white space-y-4">
-                  <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#D41C68] to-[#75145E] mx-auto flex items-center justify-center shadow-lg">
-                    <Camera className="w-10 h-10 text-white" />
+                  <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#12549A] to-[#092D59] border border-[#FFC629]/50 mx-auto flex items-center justify-center shadow-lg">
+                    <Camera className="w-10 h-10 text-[#FFC629]" />
                   </div>
-                  <h2 className="font-telugu text-xl font-extrabold">
+                  <h2 className="font-nav-unique text-xl font-extrabold">
                     కెమెరాతో QR కోడ్ స్కాన్ చేయండి
                   </h2>
-                  <p className="text-xs text-slate-300 max-w-sm mx-auto">
+                  <p className="text-xs text-blue-100 max-w-sm mx-auto">
                     Click &ldquo;Start Camera Scanner&rdquo; to scan your printed Grace
                     Mandhir Calendar QR code, or upload a QR image below.
                   </p>
@@ -192,7 +190,7 @@ export default function QrScannerPage() {
             </div>
 
             {cameraError && (
-              <div className="mt-4 p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-telugu text-xs font-bold">
+              <div className="mt-4 p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-nav-unique text-xs font-bold">
                 {cameraError}
               </div>
             )}
@@ -209,30 +207,29 @@ export default function QrScannerPage() {
               </div>
             )}
 
-            {/* Scanner Action Buttons */}
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
               {!cameraActive ? (
                 <button
                   type="button"
                   onClick={() => setCameraActive(true)}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white font-telugu text-sm font-extrabold shadow-lg hover:opacity-95 transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#092D59] to-[#12549A] text-white font-nav-unique text-sm font-extrabold shadow-lg hover:opacity-95 transition-all"
                 >
-                  <Camera className="w-4 h-4" />
+                  <Camera className="w-4 h-4 text-[#FFC629]" />
                   <span>కెమెరా ప్రారంభించండి (Start Camera Scanner)</span>
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => setCameraActive(false)}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-rose-600 text-white font-bold text-sm shadow-lg"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-red-600 text-white font-bold text-sm shadow-lg"
                 >
                   <CameraOff className="w-4 h-4" />
                   <span>Stop Camera</span>
                 </button>
               )}
 
-              <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-[#FDF2F8] hover:bg-pink-100 text-[#75145E] border border-pink-200 font-telugu text-sm font-extrabold transition-colors">
-                <Upload className="w-4 h-4" />
+              <label className="cursor-pointer inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-[#EAF5FF] hover:bg-blue-100 text-[#092D59] border border-blue-200 font-nav-unique text-sm font-extrabold transition-colors">
+                <Upload className="w-4 h-4 text-[#12549A]" />
                 <span>QR ఇమేజ్ అప్‌లోడ్ చేయండి (Upload QR Image)</span>
                 <input
                   type="file"
@@ -244,12 +241,11 @@ export default function QrScannerPage() {
             </div>
           </div>
 
-          {/* Right: Manual Date Selector & Instant Sample QR Cards (5 Cols) */}
+          {/* Right: Manual Date Selector & Sample QR Cards (5 Cols) */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Manual Date Picker Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg border border-pink-100">
-              <h3 className="flex items-center gap-2 font-telugu text-lg font-extrabold text-[#75145E] mb-2">
-                <Calendar className="w-5 h-5 text-[#C81D66]" />
+            <div className="bg-white rounded-3xl p-6 shadow-lg border border-blue-100">
+              <h3 className="flex items-center gap-2 font-nav-unique text-lg font-extrabold text-[#092D59] mb-2">
+                <Calendar className="w-5 h-5 text-[#12549A]" />
                 <span>తేదీని స్వయంగా ఎంచుకోండి (Select Date Manually)</span>
               </h3>
               <p className="text-xs text-slate-600 mb-4">
@@ -261,12 +257,12 @@ export default function QrScannerPage() {
                   type="date"
                   value={manualDate}
                   onChange={(e) => setManualDate(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl border-2 border-pink-200 font-bold text-slate-900 focus:outline-none focus:border-[#C81D66]"
+                  className="flex-1 px-4 py-3 rounded-xl border-2 border-blue-200 font-bold text-[#092D59] focus:outline-none focus:border-[#12549A]"
                 />
                 <button
                   type="button"
                   onClick={() => router.push(`/verse/${manualDate}`)}
-                  className="inline-flex items-center gap-1.5 px-5 py-3 rounded-xl bg-gradient-to-r from-[#D41C68] to-[#75145E] text-white font-telugu text-sm font-extrabold shadow"
+                  className="inline-flex items-center gap-1.5 px-5 py-3 rounded-xl bg-gradient-to-r from-[#092D59] to-[#12549A] text-white font-nav-unique text-sm font-extrabold shadow"
                 >
                   <span>తెరవండి</span>
                   <ArrowRight className="w-4 h-4" />
@@ -274,10 +270,9 @@ export default function QrScannerPage() {
               </div>
             </div>
 
-            {/* Instant Testable Calendar QR Codes */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg border border-pink-100">
-              <h3 className="flex items-center gap-2 font-telugu text-lg font-extrabold text-[#75145E] mb-1">
-                <Sparkles className="w-5 h-5 text-[#C81D66]" />
+            <div className="bg-white rounded-3xl p-6 shadow-lg border border-blue-100">
+              <h3 className="flex items-center gap-2 font-nav-unique text-lg font-extrabold text-[#092D59] mb-1">
+                <Sparkles className="w-5 h-5 text-[#D49212]" />
                 <span>నమూనా క్యాలెండర్ QR కోడ్‌లు (Click or Scan)</span>
               </h3>
               <p className="text-xs text-slate-600 mb-4">
@@ -286,24 +281,24 @@ export default function QrScannerPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 {[
+                  { date: "2027-01-05", ref: "యెషయా 41:10" },
                   { date: "2026-11-05", ref: "కీర్తనలు 4:8" },
-                  { date: "2026-11-06", ref: "కీర్తనలు 4:8 (Today)" },
-                  { date: "2027-01-01", ref: "యెషయా 41:10" },
+                  { date: "2027-01-01", ref: "నూతన సంవత్సరం" },
                   { date: "2027-01-03", ref: "కీర్తనలు 23:1" },
                 ].map((item) => (
                   <div
                     key={item.date}
                     onClick={() => extractDateAndNavigate(`/verse/${item.date}`)}
-                    className="cursor-pointer group p-3 rounded-2xl bg-[#FFF7FB] hover:bg-pink-50 border border-pink-200 flex flex-col items-center text-center transition-all hover:-translate-y-0.5"
+                    className="cursor-pointer group p-3 rounded-2xl bg-[#F4F9FF] hover:bg-[#EAF5FF] border border-blue-200 flex flex-col items-center text-center transition-all hover:-translate-y-0.5"
                   >
                     <QrCodeBox date={item.date} size={86} />
-                    <p className="text-xs font-extrabold text-[#75145E] mt-2">
+                    <p className="text-xs font-extrabold text-[#092D59] mt-2">
                       {item.date}
                     </p>
-                    <p className="font-telugu text-[11px] font-bold text-slate-600">
+                    <p className="font-nav-unique text-[11px] font-bold text-slate-600">
                       {item.ref}
                     </p>
-                    <span className="mt-1.5 text-[10px] font-bold text-[#C81D66] group-hover:underline">
+                    <span className="mt-1.5 text-[10px] font-bold text-[#12549A] group-hover:underline">
                       Simulate Scan →
                     </span>
                   </div>

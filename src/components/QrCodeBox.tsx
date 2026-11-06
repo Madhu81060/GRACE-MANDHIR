@@ -33,7 +33,7 @@ export const QrCodeBox: React.FC<QrCodeBoxProps> = ({
       margin: 1,
       errorCorrectionLevel: "H",
       color: {
-        dark: "#1A0A18",
+        dark: "#092D59",
         light: "#FFFFFF",
       },
     })
@@ -53,7 +53,7 @@ export const QrCodeBox: React.FC<QrCodeBoxProps> = ({
     <div
       onClick={onClick}
       title={`Scan or click to open /verse/${date}`}
-      className={`relative inline-flex items-center justify-center bg-white rounded-lg p-1.5 shadow-[0_4px_14px_rgba(0,0,0,0.18)] border border-white/90 ${
+      className={`relative inline-flex items-center justify-center bg-white rounded-lg p-1.5 shadow-[0_4px_14px_rgba(9,45,89,0.18)] border border-[#C6E0FA] ${
         onClick ? "cursor-pointer hover:scale-105 transition-transform" : ""
       } ${className}`}
       style={{ width: size, height: size }}
@@ -73,8 +73,8 @@ export const QrCodeBox: React.FC<QrCodeBoxProps> = ({
 
       {showCenterLogo && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-5 h-5 rounded-full bg-white shadow-sm border border-[#75145E]/30 flex items-center justify-center">
-            <span className="text-[10px] font-black text-[#8B1346] leading-none">
+          <div className="w-5 h-5 rounded-full bg-white shadow-sm border border-[#12549A]/40 flex items-center justify-center">
+            <span className="text-[10px] font-black text-[#092D59] leading-none">
               ✞
             </span>
           </div>

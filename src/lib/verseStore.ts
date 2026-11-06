@@ -86,11 +86,11 @@ export const DEFAULT_BACKGROUNDS: WallpaperBackground[] = [
 
 export const DEFAULT_TEMPLATES: WallpaperTemplate[] = [
   {
-    id: "royal-burgundy",
-    name: "Royal Burgundy & Golden Laurel (Unique Theme)",
-    teluguName: "రాయల్ గోల్డ్ & మెరూన్ వాగ్దాన థీమ్",
+    id: "royal-navy",
+    name: "Royal Navy Blue, White & Gold Card",
+    teluguName: "రాయల్ నేవీ బ్లూ & గోల్డ్ వాగ్దాన కార్డ్",
     description:
-      "Unique royal burgundy dome card with golden laurel wreaths, metallic gold reference plaque & Jesus artwork",
+      "Royal Navy Blue dome card with golden cream reference plaque, Jesus & child artwork, and GRACE MANDHIR footer",
     aspectRatio: "1:1",
   },
   {
@@ -106,7 +106,7 @@ export const DEFAULT_TEMPLATES: WallpaperTemplate[] = [
     name: "Grace Mobile Lockscreen (1080×1920)",
     teluguName: "మొబైల్ లాక్‌స్క్రీన్ వాల్పేపర్ (1080×1920)",
     description:
-      "Vertical 9:16 lock-screen wallpaper with sunrise cross, church crest & bilingual verse",
+      "Vertical 9:16 lock-screen wallpaper with sunrise cross, crest & bilingual verse",
     aspectRatio: "9:16",
   },
 ];
@@ -245,8 +245,8 @@ export const CURATED_VERSES: VerseRecord[] = [
     englishReference: "Isaiah 41:10",
     themeTitle: "Divine Strength & Help",
     teluguThemeTitle: "ఈరోజు వాగ్దానం",
-    backgroundUrl: "/images/royal-theme-ref.jpg",
-    templateId: "royal-burgundy",
+    backgroundUrl: "/images/navy-theme-ref.jpg",
+    templateId: "royal-navy",
   },
 ];
 
